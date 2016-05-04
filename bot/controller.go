@@ -129,7 +129,7 @@ func (b *Controller) currexCmd(m *tgbotapi.Message) {
 	r := regexp.MustCompile("(\\d*(\\.?\\d*))(?:\\s)?(\\w{3})(\\s(?:to\\s)?(\\w{3}))?")
 	q := r.FindStringSubmatch(m.CommandArguments())
 
-	if len(q) == 0 || (len(q) == 6 && q[1] != " ") {
+	if len(q) == 0 || (len(q) == 6 && q[1] == "") {
 		msg = fmt.Sprint("Excuse me, but you've sent wrong parameters.\n")
 		msg += fmt.Sprint("Please, try: `/currex amount from to`")
 
