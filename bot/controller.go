@@ -126,7 +126,7 @@ func (b *Controller) currexCmd(m *tgbotapi.Message) {
 	var msg, amount, from, to string
 	var m2 tgbotapi.MessageConfig
 
-	r := regexp.MustCompile("(\\d*(\\.?\\d*))(?:\\s)?(\\w{3})(\\s(?:to\\s)?(\\w{3}))?")
+	r := regexp.MustCompile("([-+]?\\d*(\\.?\\d*))(?:\\s)?(\\w{3})(\\s(?:to\\s)?(\\w{3}))?")
 	q := r.FindStringSubmatch(m.CommandArguments())
 
 	if len(q) == 0 || (len(q) == 6 && q[1] == "") {
@@ -155,6 +155,13 @@ func (b *Controller) currexCmd(m *tgbotapi.Message) {
 	a, err := strconv.ParseFloat(amount, 64)
 	if err != nil {
 		panic(err)
+	}
+
+	if a <= float64(0) {
+		msg = "The amount must be an positive number"
+		m2 = tgbotapi.NewMessage(m.Chat.ID, msg)
+		b.API.Send(m2)
+		return
 	}
 
 	cx := &Currex{
