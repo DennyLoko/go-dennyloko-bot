@@ -1,10 +1,10 @@
 # go-dennyloko-bot [WIP]
 This is my personal bot which helps me on my daily tasks.
-This is work is not done (and I think it'll never be), but you can use as you
-wish.
+This work is not done (and I think it'll never be), but you can use as you wish.
 
-It currently does nothing more than just connect to Telegram. New
-functionalities will be added as needed.
+It currently only connects to Telegram and convert currencies using the [Google
+Finance](https://www.google.com/finance/converter). New functionalities will be
+added as needed.
 
 ## Installation
 ### Prerequisites
