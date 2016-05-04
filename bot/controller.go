@@ -6,6 +6,7 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/x-cray/logrus-prefixed-formatter"
 )
 
 // Controller is used to handle all the bot flows
@@ -33,6 +34,7 @@ func NewController(token string) (*Controller, error) {
 
 	l := logrus.New()
 	l.Level = logl
+	l.Formatter = new(prefixed.TextFormatter)
 
 	bot := &Controller{
 		API: api,
@@ -66,13 +68,20 @@ func (b *Controller) Start() {
 }
 
 func (b *Controller) parseUpdate(u tgbotapi.Update) {
-	if u.Message.IsCommand() {
+	if u.Message.IsCommand() == true {
 		switch u.Message.Command() {
 		case "start":
 			b.startCmd(u)
 		case "help":
 			b.helpCmd(u.Message)
 		}
+	} else {
+		b.log.Debug("The human is trying to talk to me...")
+		b.log.Debug("WHAT TO DO? WHAT TO DO?")
+		b.log.Debug("Nothing.")
+
+		m := tgbotapi.NewMessage(u.Message.Chat.ID, "\xE3\x80\xB0")
+		b.API.Send(m)
 	}
 }
 
