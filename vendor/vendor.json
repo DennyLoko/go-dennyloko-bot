@@ -3,12 +3,6 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "9itSgW/qinj7zD+UC/gcUB6FuGc=",
-			"path": "github.com/DennyLoko/go-dennyloko-bot/bot",
-			"revision": "7726ab7dab551942fec54fcdfa09f8014284016e",
-			"revisionTime": "2016-04-29T06:51:52Z"
-		},
-		{
 			"checksumSHA1": "htjvdG/znrHmFYRQBqA2vHrJsF4=",
 			"path": "github.com/Sirupsen/logrus",
 			"revision": "cd7d1bbe41066b6c1f19780f895901052150a575",
