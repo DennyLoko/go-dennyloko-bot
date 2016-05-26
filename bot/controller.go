@@ -184,9 +184,8 @@ func (b *Controller) currexCmd(m *tgbotapi.Message) {
 		return
 	}
 
-	msg = fmt.Sprintf("Wait... I'm converting %.2f %s to %s", a, from, to)
-	m2 = tgbotapi.NewMessage(m.Chat.ID, msg)
-	b.API.Send(m2)
+	typing := tgbotapi.NewChatAction(m.Chat.ID, "typing")
+	b.API.Send(typing)
 
 	s, f, t, err := cx.Convert()
 	if err != nil {
