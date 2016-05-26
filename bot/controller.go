@@ -99,8 +99,10 @@ func (b *Controller) parseUpdate(u tgbotapi.Update) {
 }
 
 func (b *Controller) invalidCmd(msg *tgbotapi.Message) {
-	m := tgbotapi.NewMessage(msg.Chat.ID, "I didn't understand this command, sorry.")
-	b.API.Send(m)
+	if msg.Chat.IsPrivate() || strings.Index(msg.Text, "@") > -1 {
+		m := tgbotapi.NewMessage(msg.Chat.ID, "I didn't understand this command, sorry.")
+		b.API.Send(m)
+	}
 }
 
 func (b *Controller) startCmd(u tgbotapi.Update) {
