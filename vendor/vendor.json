@@ -21,6 +21,12 @@
 			"revisionTime": "2015-09-07T01:02:28Z"
 		},
 		{
+			"checksumSHA1": "h45ngV/RTemM8C1554v2DBwzGcY=",
+			"path": "github.com/miekg/dns",
+			"revision": "f53eb22bfbe0959c449c03aa136f0e398813afd9",
+			"revisionTime": "2016-05-05T15:56:17Z"
+		},
+		{
 			"checksumSHA1": "j7X/qWeuR0yMbeExra430PCK5m4=",
 			"path": "github.com/x-cray/logrus-prefixed-formatter",
 			"revision": "19bfe61502ba35a3235b4970c10b9366a0aa9b61",
