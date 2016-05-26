@@ -29,6 +29,10 @@ func (i *DNS) OwnAddress() ([]net.IP, error) {
 	return i.lookupddress("myip.opendns.com")
 }
 
+func (i *DNS) LookupAddress(host string) ([]net.IP, error) {
+	return i.lookupddress(host)
+}
+
 func (i *DNS) lookupddress(host string) (ips []net.IP, err error) {
 	m := dns.Msg{}
 	m.SetQuestion(host+".", dns.TypeA)

@@ -86,6 +86,8 @@ func (b *Controller) parseUpdate(u tgbotapi.Update) {
 			b.currexCmd(u.Message)
 		case "ip":
 			b.ipCmd(u.Message)
+		case "dig":
+			b.digCmd(u.Message)
 		default:
 			b.invalidCmd(u.Message)
 		}
@@ -211,6 +213,28 @@ func (b *Controller) ipCmd(m *tgbotapi.Message) {
 		msg = "One error occurred... Sorry."
 	} else {
 		msg = "My IP is: " + ip[0].String()
+	}
+
+	m2 := tgbotapi.NewMessage(m.Chat.ID, msg)
+	b.API.Send(m2)
+}
+
+func (b *Controller) digCmd(m *tgbotapi.Message) {
+	var msg string
+
+	hosts := strings.Split(strings.TrimSpace(m.CommandArguments()), " ")
+	util := NewDNS()
+
+	for _, host := range hosts {
+		ips, _ := util.LookupAddress(host)
+
+		msg += host + ": "
+
+		for _, ip := range ips {
+			msg += ip.String() + " "
+		}
+
+		msg += "\n"
 	}
 
 	m2 := tgbotapi.NewMessage(m.Chat.ID, msg)
