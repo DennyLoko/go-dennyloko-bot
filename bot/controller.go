@@ -84,6 +84,8 @@ func (b *Controller) parseUpdate(u tgbotapi.Update) {
 			b.helpCmd(u.Message)
 		case "currex", "c":
 			b.currexCmd(u.Message)
+		case "ip":
+			b.ipCmd(u.Message)
 		default:
 			b.invalidCmd(u.Message)
 		}
@@ -91,9 +93,6 @@ func (b *Controller) parseUpdate(u tgbotapi.Update) {
 		b.log.Debug("The human is trying to talk to me...")
 		b.log.Debug("WHAT TO DO? WHAT TO DO?")
 		b.log.Debug("Nothing.")
-
-		m := tgbotapi.NewMessage(u.Message.Chat.ID, "\xE3\x80\xB0")
-		b.API.Send(m)
 	}
 }
 
@@ -199,5 +198,21 @@ func (b *Controller) currexCmd(m *tgbotapi.Message) {
 	}
 
 	m2 = tgbotapi.NewMessage(m.Chat.ID, msg)
+	b.API.Send(m2)
+}
+
+func (b *Controller) ipCmd(m *tgbotapi.Message) {
+	var msg string
+
+	util := NewDNS()
+	ip, _ := util.OwnAddress()
+
+	if len(ip) < 1 {
+		msg = "One error occurred... Sorry."
+	} else {
+		msg = "My IP is: " + ip[0].String()
+	}
+
+	m2 := tgbotapi.NewMessage(m.Chat.ID, msg)
 	b.API.Send(m2)
 }
