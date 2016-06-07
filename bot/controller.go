@@ -89,7 +89,7 @@ func (b *Controller) parseUpdate(u tgbotapi.Update) {
 		case "dig":
 			b.digCmd(u.Message)
 		default:
-			b.invalidCmd(u.Message)
+			b.invalidCmd(*u.Message)
 		}
 	} else {
 		b.log.Debug("The human is trying to talk to me...")
@@ -98,8 +98,8 @@ func (b *Controller) parseUpdate(u tgbotapi.Update) {
 	}
 }
 
-func (b *Controller) invalidCmd(msg *tgbotapi.Message) {
-	if msg.Chat.IsPrivate() || strings.Index(msg.Text, "@") > -1 {
+func (b *Controller) invalidCmd(msg tgbotapi.Message) {
+	if msg.Chat.IsPrivate() || b.API.IsMessageToMe(msg) {
 		m := tgbotapi.NewMessage(msg.Chat.ID, "I didn't understand this command, sorry.")
 		b.API.Send(m)
 	}
