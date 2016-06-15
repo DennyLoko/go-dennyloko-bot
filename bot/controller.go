@@ -69,9 +69,14 @@ func (b *Controller) Start() {
 
 	for u := range updates {
 		b.log.Debug("Update received! Parsing...")
-		b.log.Infof("[%s (%d)]: %s", u.Message.From.UserName, u.Message.From.ID, u.Message.Text)
 
-		b.parseUpdate(u)
+		if u.Message != nil {
+			b.log.Infof("[%s (%d)]: %s", u.Message.From.UserName, u.Message.From.ID, u.Message.Text)
+			b.parseUpdate(u)
+		} else {
+			b.log.Error("Received this update but doesn't seems a Message...")
+			b.log.Errorf("%v", u)
+		}
 	}
 }
 

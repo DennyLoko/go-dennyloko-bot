@@ -9,6 +9,12 @@
 			"revisionTime": "2016-04-25T09:32:37Z"
 		},
 		{
+			"checksumSHA1": "mA1jCzbc+bGPzRPXXGdeTsRYs8U=",
+			"path": "github.com/getsentry/raven-go",
+			"revision": "dffeb57df75d6a911f00232155194e43d79d38d7",
+			"revisionTime": "2016-05-18T20:47:10Z"
+		},
+		{
 			"checksumSHA1": "7TUCPTQKzZsrXl1WIGMTnK9w6wg=",
 			"path": "github.com/go-telegram-bot-api/telegram-bot-api",
 			"revision": "bf6e165e92e6da5dd62b859f8397f7c8864e4b04",
