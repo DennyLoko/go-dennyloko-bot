@@ -3,14 +3,13 @@ package bot
 import (
 	"bytes"
 	"fmt"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
 
+	"github.com/DennyLoko/go-dennyloko-bot/bot/commands/currency"
 	"github.com/Sirupsen/logrus"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
-	"github.com/x-cray/logrus-prefixed-formatter"
 )
 
 // Controller is used to handle all the bot flows
@@ -24,25 +23,11 @@ type Controller struct {
 }
 
 // NewController returns an new Controller object with the dependencies satisfied
-func NewController(token string) (*Controller, error) {
+func NewController(token string, l *logrus.Logger) (*Controller, error) {
 	api, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
 		panic(err)
 	}
-
-	level := os.Getenv("LOG_LEVEL")
-	if level == "" {
-		level = "info"
-	}
-
-	logl, err := logrus.ParseLevel(level)
-	if err != nil {
-		panic(err)
-	}
-
-	l := logrus.New()
-	l.Level = logl
-	l.Formatter = new(prefixed.TextFormatter)
 
 	bot := &Controller{
 		API: api,
@@ -172,11 +157,11 @@ func (b *Controller) currexCmd(m *tgbotapi.Message) {
 		return
 	}
 
-	cx := &Currex{
+	cx := &currency.Currex{
 		Amount: a,
 		From:   from,
 		To:     to,
-		log:    b.log,
+		Log:    b.log,
 	}
 
 	if err = cx.Validate(from); err != nil {
@@ -200,7 +185,7 @@ func (b *Controller) currexCmd(m *tgbotapi.Message) {
 	}
 
 	if s == true {
-		msg = fmt.Sprintf("%s %.2f = %s %.2f", from, f, to, t)
+		msg = fmt.Sprintf("%s %.2f = %s %.4f", from, f, to, t)
 	} else {
 		msg = "I'm sorry, I wasn't able to do this conversion... =("
 	}
